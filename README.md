@@ -2,7 +2,7 @@
 
 Avi helps you remember terminal commands.
 
-![Description](./assets/your-gif.gif)
+![Description](./.github/demo.gif)
 
 ## Installation
 
