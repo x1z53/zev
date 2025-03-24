@@ -1,0 +1,29 @@
+[project]
+name = "avi"
+version = "0.1.0"
+description = "A CLI using Typer"
+dependencies = [
+    "typer==0.15.2",
+    "openai==1.68.2",
+    "pydantic==2.10.6",
+    "python-dotenv==1.0.1"
+]
+requires-python = ">=3.8"
+
+[project.scripts]
+avi = "main:app"
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.11.2"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.ruff]
+line-length = 120
