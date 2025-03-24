@@ -1,14 +1,11 @@
 from dataclasses import dataclass
 import dotenv
-import typer
 import os
 from utils import get_input_string
 from llm import get_options
 import questionary
 import pyperclip
 from rich import print as rprint
-
-app = typer.Typer()
 
 
 @dataclass
@@ -19,27 +16,20 @@ class DotEnvField:
     default: str = ""
 
 
-@app.command()
+DOT_ENV_FIELDS = [
+    DotEnvField(
+        name="OPENAI_API_KEY",
+        prompt="Enter your OpenAI API key",
+        required=False,
+        default="",
+    ),
+]
+
+
 def setup():
-    dotenv_fields = [
-        DotEnvField(
-            name="OPENAI_API_KEY",
-            prompt="Enter your OpenAI API key",
-            required=False,
-            default="",
-        ),
-    ]
-
-    if os.path.exists(".env"):
-        typer.echo("Creating a new .env file")
-        for field in dotenv_fields:
-            os.environ[field.name] = ""
-
-    dotenv.load_dotenv()
     new_file = ""
-    for field in dotenv_fields:
+    for field in DOT_ENV_FIELDS:
         current_value = os.getenv(field.name)
-        print("Current value: ", current_value)
         new_value = get_input_string(field.name, field.prompt, current_value, field.default, field.required)
         new_file += f"{field.name}={new_value}\n"
 
@@ -76,19 +66,25 @@ def show_options(words: str):
 
     if selected != "Cancel":
         pyperclip.copy(selected)
-        rprint(f"\n[green]✓[/green] Copied to clipboard")
+        rprint("\n[green]✓[/green] Copied to clipboard")
 
 
-@app.callback(invoke_without_command=True)
-def main(ctx: typer.Context, words: list[str] = typer.Argument(None)):
-    if not ctx.invoked_subcommand:
-        if not words:
-            return
-        if words[0] in ctx.command.commands:
-            command = ctx.command.commands[words[0]]
-            command(words[1:] if len(words) > 1 else [])
-        else:
-            show_options(" ".join(words))
+def app():
+    import sys
+
+    args = sys.argv[1:]
+
+    if not args:
+        return
+
+    # check if .env exists
+    if not os.path.exists(".env"):
+        setup()
+        print("Setup complete... querying now...\n")
+
+    dotenv.load_dotenv()
+
+    show_options(" ".join(args))
 
 
 if __name__ == "__main__":
