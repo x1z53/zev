@@ -84,7 +84,9 @@ def app():
 
     dotenv.load_dotenv()
 
-    show_options(" ".join(args))
+    # Strip any trailing question marks from the input
+    query = " ".join(args).rstrip('?')
+    show_options(query)
 
 
 if __name__ == "__main__":

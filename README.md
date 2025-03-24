@@ -2,6 +2,8 @@
 
 Avi helps you remember terminal commands.
 
+![Description](./assets/your-gif.gif)
+
 ## Installation
 
 ```bash
@@ -19,5 +21,3 @@ avi <what you want to do>
 ```bash
 avi i want to create a new directory
 ```
-
-
