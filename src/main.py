@@ -57,27 +57,27 @@ def show_options(words: str):
         print("No commands available")
         return
 
-    options = [questionary.Choice(
-        cmd.command,
-        description=cmd.short_explanation
-    ) for cmd in response.commands]
+    options = [questionary.Choice(cmd.command, description=cmd.short_explanation) for cmd in response.commands]
     options.append(questionary.Choice("Cancel"))
     options.append(questionary.Separator())
-    
+
     selected = questionary.select(
         "Select command:",
         choices=options,
         use_shortcuts=True,
-        style=questionary.Style([
-            ('answer', 'fg:#61afef'),
-            ('question', 'bold'),
-            ('instruction', 'fg:#98c379'),
-        ])
+        style=questionary.Style(
+            [
+                ("answer", "fg:#61afef"),
+                ("question", "bold"),
+                ("instruction", "fg:#98c379"),
+            ]
+        ),
     ).ask()
-    
+
     if selected != "Cancel":
         pyperclip.copy(selected)
         rprint(f"\n[green]✓[/green] Copied to clipboard")
+
 
 @app.callback(invoke_without_command=True)
 def main(ctx: typer.Context, words: list[str] = typer.Argument(None)):
