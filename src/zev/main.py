@@ -1,14 +1,14 @@
 from dataclasses import dataclass
 import dotenv
 import os
-from utils import get_input_string
-from llm import get_options
 import questionary
 import pyperclip
 import platformdirs
 from rich import print as rprint
 import sys
 
+from zev.llm import get_options
+from zev.utils import get_input_string
 
 @dataclass
 class DotEnvField:
@@ -101,7 +101,6 @@ def app():
     # Strip any trailing question marks from the input
     query = " ".join(args).rstrip("?")
     show_options(query)
-    print("foo", args)
 
 
 if __name__ == "__main__":
