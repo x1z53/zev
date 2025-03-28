@@ -5,8 +5,9 @@ from utils import get_input_string
 from llm import get_options
 import questionary
 import pyperclip
+import platformdirs
 from rich import print as rprint
-
+import sys
 
 @dataclass
 class DotEnvField:
@@ -29,11 +30,13 @@ DOT_ENV_FIELDS = [
 def setup():
     new_file = ""
     for field in DOT_ENV_FIELDS:
-        current_value = os.getenv(field.name)
+        current_value = os.environ[field.name]
         new_value = get_input_string(field.name, field.prompt, current_value, field.default, field.required)
         new_file += f"{field.name}={new_value}\n"
-
-    with open(".env", "w") as f:
+    
+    app_data_dir = platformdirs.user_data_dir("avi")
+    os.makedirs(app_data_dir, exist_ok=True)
+    with open(os.path.join(app_data_dir, ".env"), "w") as f:
         f.write(new_file)
 
 
@@ -68,25 +71,30 @@ def show_options(words: str):
         pyperclip.copy(selected)
         rprint("\n[green]✓[/green] Copied to clipboard")
 
+def run_no_prompt():
+    input = get_input_string("input", "Describe what you want to do", "", "", False)
+    show_options(input)
+
 
 def app():
-    import sys
-
     args = sys.argv[1:]
 
     if not args:
+        run_no_prompt()
         return
 
     # check if .env exists
-    if not os.path.exists(".env"):
+    app_data_dir = platformdirs.user_data_dir("avi")
+    if not os.path.exists(os.path.join(app_data_dir, ".env")):
         setup()
         print("Setup complete... querying now...\n")
 
-    dotenv.load_dotenv()
+    dotenv.load_dotenv(os.path.join(app_data_dir, ".env"))
 
     # Strip any trailing question marks from the input
     query = " ".join(args).rstrip("?")
     show_options(query)
+    print("foo", args)
 
 
 if __name__ == "__main__":
