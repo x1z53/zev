@@ -1,5 +1,3 @@
-import typer
-
 
 def get_input_string(
     field_name: str, prompt: str, current_value: str = "", default: str = "", required: bool = False
@@ -13,7 +11,7 @@ def get_input_string(
 
     value = input(prompt + ": ") or default
     if required and not value:
-        typer.echo(f"{field_name} is required, please try again")
-        return get_input_string(field_name, prompt, default, required)
+        print(f"{field_name} is required, please try again")
+        return get_input_string(field_name, prompt, current_value, default, required)
 
     return value or current_value or default
