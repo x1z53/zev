@@ -9,6 +9,7 @@ import platformdirs
 from rich import print as rprint
 import sys
 
+
 @dataclass
 class DotEnvField:
     name: str
@@ -31,9 +32,11 @@ def setup():
     new_file = ""
     for field in DOT_ENV_FIELDS:
         current_value = os.environ[field.name]
-        new_value = get_input_string(field.name, field.prompt, current_value, field.default, field.required)
+        new_value = get_input_string(
+            field.name, field.prompt, current_value, field.default, field.required
+        )
         new_file += f"{field.name}={new_value}\n"
-    
+
     app_data_dir = platformdirs.user_data_dir("zev")
     os.makedirs(app_data_dir, exist_ok=True)
     with open(os.path.join(app_data_dir, ".env"), "w") as f:
@@ -50,7 +53,10 @@ def show_options(words: str):
         print("No commands available")
         return
 
-    options = [questionary.Choice(cmd.command, description=cmd.short_explanation) for cmd in response.commands]
+    options = [
+        questionary.Choice(cmd.command, description=cmd.short_explanation)
+        for cmd in response.commands
+    ]
     options.append(questionary.Choice("Cancel"))
     options.append(questionary.Separator())
 
@@ -70,6 +76,7 @@ def show_options(words: str):
     if selected != "Cancel":
         pyperclip.copy(selected)
         rprint("\n[green]✓[/green] Copied to clipboard")
+
 
 def run_no_prompt():
     input = get_input_string("input", "Describe what you want to do", "", "", False)

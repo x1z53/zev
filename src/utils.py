@@ -1,6 +1,9 @@
-
 def get_input_string(
-    field_name: str, prompt: str, current_value: str = "", default: str = "", required: bool = False
+    field_name: str,
+    prompt: str,
+    current_value: str = "",
+    default: str = "",
+    required: bool = False,
 ) -> str:
     if current_value:
         prompt = f"{prompt} (default/current: {current_value})"
