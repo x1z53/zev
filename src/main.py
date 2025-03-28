@@ -34,7 +34,7 @@ def setup():
         new_value = get_input_string(field.name, field.prompt, current_value, field.default, field.required)
         new_file += f"{field.name}={new_value}\n"
     
-    app_data_dir = platformdirs.user_data_dir("avi")
+    app_data_dir = platformdirs.user_data_dir("zev")
     os.makedirs(app_data_dir, exist_ok=True)
     with open(os.path.join(app_data_dir, ".env"), "w") as f:
         f.write(new_file)
@@ -84,7 +84,7 @@ def app():
         return
 
     # check if .env exists
-    app_data_dir = platformdirs.user_data_dir("avi")
+    app_data_dir = platformdirs.user_data_dir("zev")
     if not os.path.exists(os.path.join(app_data_dir, ".env")):
         setup()
         print("Setup complete... querying now...\n")

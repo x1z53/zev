@@ -1,23 +1,23 @@
-# Avi
+# Zev
 
-Avi helps you remember terminal commands.
+Zev helps you remember terminal commands.
 
 ![Description](./.github/demo.gif)
 
 ## Installation
 
 ```bash
-pip install avi
+pip install zev
 ```
 
 ## Usage
 
 ```bash
-avi <what you want to do>
+zev <what you want to do>
 ```
 
 ## Examples
 
 ```bash
-avi i want to create a new directory
+zev i want to create a new directory
 ```
