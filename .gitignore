@@ -5,3 +5,6 @@ src/*.egg-info
 
 # mac os
 .DS_Store
+
+# dist
+/dist
