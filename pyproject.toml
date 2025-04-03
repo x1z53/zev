@@ -1,7 +1,8 @@
 [project]
 name = "zev"
-version = "0.1.1"
+version = "0.1.2"
 description = "Lookup CLI commands easily"
+readme = "README.md"
 dependencies = [
     "openai==1.68.2",
     "platformdirs==4.3.7",
