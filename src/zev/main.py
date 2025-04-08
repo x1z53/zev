@@ -84,17 +84,17 @@ def run_no_prompt():
 
 
 def app():
-    args = sys.argv[1:]
-
-    if not args:
-        run_no_prompt()
-        return
-
     # check if .env exists
     app_data_dir = platformdirs.user_data_dir("zev")
     if not os.path.exists(os.path.join(app_data_dir, ".env")):
         setup()
         print("Setup complete... querying now...\n")
+
+    args = sys.argv[1:]
+
+    if not args:
+        run_no_prompt()
+        return
 
     dotenv.load_dotenv(os.path.join(app_data_dir, ".env"))
 
