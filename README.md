@@ -12,12 +12,20 @@ pip install zev
 
 ## Usage
 
+#### Option 1: Type zev and follow the workflow
+
 ```bash
-zev <what you want to do>
+zev
+```
+
+#### Option 2: Put your prompt in quotes
+
+```bash
+zev '<what you want to do>'
 ```
 
 ## Examples
 
 ```bash
-zev i want to create a new directory
+zev 'show all running python processes'
 ```
