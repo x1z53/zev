@@ -1,6 +1,6 @@
 # Zev
 
-Zev helps you remember terminal commands.
+Zev helps you remember (or discover) terminal commands.
 
 ![Description](./.github/demo.gif)
 
@@ -9,6 +9,8 @@ Zev helps you remember terminal commands.
 ```bash
 pip install zev
 ```
+
+This project runs on top of the OpenAI API. After your first time running it, you will be prompted to enter an OpenAI key.
 
 ## Usage
 
