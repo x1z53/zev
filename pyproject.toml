@@ -13,7 +13,7 @@ dependencies = [
     "rich==13.9.4"
 ]
 requires-python = ">=3.9"
-urls = { Repository = "https://github.com/danielnewman/zev" }
+urls = { Repository = "https://github.com/dtnewman/zev" }
 
 [project.scripts]
 zev = "zev.main:app"
