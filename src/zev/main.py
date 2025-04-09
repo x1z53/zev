@@ -2,12 +2,10 @@ from dataclasses import dataclass
 import dotenv
 import os
 import questionary
-from pathlib import Path
 import pyperclip
 import platformdirs
 from rich import print as rprint
 import sys
-import tomli
 
 from zev.llm import get_options
 from zev.utils import get_input_string
@@ -29,13 +27,6 @@ DOT_ENV_FIELDS = [
         default="",
     ),
 ]
-
-
-def get_version():
-    pyproject_path = Path(__file__).parent.parent.parent / "pyproject.toml"
-    with open(pyproject_path, "rb") as f:
-        pyproject = tomli.load(f)
-    return pyproject["project"]["version"]
 
 
 def setup():
@@ -107,7 +98,7 @@ def app():
         print("Setup complete... querying now...\n")
         return
     elif len(args) == 1 and args[0] == "--version":
-        print(f"zev version: {get_version()}")
+        print(f"zev version: 0.1.8")
         return
 
     if not args:
