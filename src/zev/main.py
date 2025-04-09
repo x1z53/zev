@@ -32,7 +32,7 @@ DOT_ENV_FIELDS = [
 def setup():
     new_file = ""
     for field in DOT_ENV_FIELDS:
-        current_value = os.environ[field.name]
+        current_value = os.environ.get(field.name, "")
         new_value = get_input_string(field.name, field.prompt, current_value, field.default, field.required)
         new_file += f"{field.name}={new_value}\n"
 
