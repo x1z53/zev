@@ -2,10 +2,12 @@ from dataclasses import dataclass
 import dotenv
 import os
 import questionary
+from pathlib import Path
 import pyperclip
 import platformdirs
 from rich import print as rprint
 import sys
+import tomli
 
 from zev.llm import get_options
 from zev.utils import get_input_string
@@ -29,6 +31,13 @@ DOT_ENV_FIELDS = [
 ]
 
 
+def get_version():
+    pyproject_path = Path(__file__).parent.parent.parent / "pyproject.toml"
+    with open(pyproject_path, "rb") as f:
+        pyproject = tomli.load(f)
+    return pyproject["project"]["version"]
+
+
 def setup():
     new_file = ""
     for field in DOT_ENV_FIELDS:
@@ -44,6 +53,9 @@ def setup():
 
 def show_options(words: str):
     response = get_options(words)
+    if response is None:
+        return
+
     if not response.is_valid:
         print(response.explanation_if_not_valid)
         return
@@ -80,19 +92,29 @@ def run_no_prompt():
 
 
 def app():
-    # check if .env exists
+    # check if .env exists or if setting up again
     app_data_dir = platformdirs.user_data_dir("zev")
+    args = [arg.strip() for arg in sys.argv[1:]]
+    
     if not os.path.exists(os.path.join(app_data_dir, ".env")):
         setup()
         print("Setup complete... querying now...\n")
-
-    args = sys.argv[1:]
+        if len(args) == 1 and args[0] == "--setup":
+            return
+    elif len(args) == 1 and args[0] == "--setup":
+        dotenv.load_dotenv(os.path.join(app_data_dir, ".env"), override=True)
+        setup()
+        print("Setup complete... querying now...\n")
+        return
+    elif len(args) == 1 and args[0] == "--version":
+        print(f"zev version: {get_version()}")
+        return
 
     if not args:
         run_no_prompt()
         return
 
-    dotenv.load_dotenv(os.path.join(app_data_dir, ".env"))
+    dotenv.load_dotenv(os.path.join(app_data_dir, ".env"), override=True)
 
     # Strip any trailing question marks from the input
     query = " ".join(args).rstrip("?")

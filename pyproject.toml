@@ -1,16 +1,17 @@
 [project]
 name = "zev"
-version = "0.1.6"
+version = "0.1.7"
 description = "Lookup CLI commands easily"
 readme = "README.md"
 dependencies = [
-    "openai==1.68.2",
+    "openai==1.72.0",
     "platformdirs==4.3.7",
     "pyperclip==1.9.0",
     "pydantic==2.10.6",
     "python-dotenv==1.0.1",
     "questionary===2.1.0",
-    "rich==13.9.4"
+    "rich==13.9.4",
+    "tomli>=2.0.1"
 ]
 requires-python = ">=3.9"
 urls = { Repository = "https://github.com/dtnewman/zev" }
