@@ -48,6 +48,14 @@ zev 'check if google.com is reachable'
 zev 'show uncommitted changes in git'
 ```
 
+## ⚙️ Settings
+
+You can update your OpenAI API key or other settings by running:
+
+```bash
+zev --setup
+```
+
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to open issues or submit pull requests.
