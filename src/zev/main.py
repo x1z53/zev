@@ -98,14 +98,15 @@ def app():
         print("Setup complete... querying now...\n")
         return
     elif len(args) == 1 and args[0] == "--version":
-        print(f"zev version: 0.1.8")
+        print(f"zev version: 0.1.9")
         return
+
+    # important: make sure this is loaded before actually running the app (in regular or interactive mode)
+    dotenv.load_dotenv(os.path.join(app_data_dir, ".env"), override=True)
 
     if not args:
         run_no_prompt()
         return
-
-    dotenv.load_dotenv(os.path.join(app_data_dir, ".env"), override=True)
 
     # Strip any trailing question marks from the input
     query = " ".join(args).rstrip("?")
